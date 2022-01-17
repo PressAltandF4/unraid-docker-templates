@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Containers>
+  <Date>2022-01-17</Date>
+  <Beta>False</Beta>
+  <Category>Networking</Category>
+  <Name>NginxProxyManager</Name>
+  <Project>https://nginxproxymanager.com/</Project>
+
+  <Changes>
+[center][img width='155px' src='https://d2631fvi2jdnb6.cloudfront.net/docker/limetech.png'][/center]
+
+[center][font size=4]NginxProxyManager Change Log[/font][/center]
+
+[font size=3]2022.01.17[/font]
+- Updated to v2.9.15
+- Revert Add two new headers to proxy.conf
+- Added Constellix (thanks @troykelly)
+
+[font size=3]2018.01.04[/font]
+- Initial Release
+  </Changes>
+
+  <Overview>
+    This project comes as a pre-built docker image that enables you to easily forward to your websites running at home or otherwise, including free SSL, without having to know too much about Nginx or Letsencrypt.
+  </Overview>
+  <Description>
+    This project comes as a pre-built docker image that enables you to easily forward to your websites running at home or otherwise, including free SSL, without having to know too much about Nginx or Letsencrypt.
+    [br][br]
+    [b][span style='color: #E80000;']Default Credentials:[/span][/b][br]
+    [b]Username:[/b] admin@example.com [br][br]
+    [b]Password:[/b] changeme
+  </Description>
+  <Registry>https://hub.docker.com/r/jc21/nginx-proxy-manager</Registry>
+  <GitHub>https://github.com/NginxProxyManager/nginx-proxy-manager</GitHub>
+  <Repository>jc21/nginx-proxy-manager:latest</Repository>
+  <Support>https://nginxproxymanager.com/faq/</Support>
+  <BindTime>true</BindTime>
+  <Privileged>false</Privileged>
+  <Networking>
+    <Mode>host</Mode>
+    <Publish>
+      <Port>
+        <HostPort>80</HostPort>
+        <ContainerPort>80</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+      <Port>
+        <HostPort>443</HostPort>
+        <ContainerPort>443</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+      <Port>
+        <HostPort>81</HostPort>
+        <ContainerPort>81</ContainerPort>
+        <Protocol>udp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Environment/>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/NginxProxyManager/Data</HostDir>
+      <ContainerDir>/data</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+    <Volume>
+      <HostDir>/mnt/user/appdata/NginxProxyManager/Certificates</HostDir>
+      <ContainerDir>/etc/letsencrypt</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <WebUI>http://[IP]:[PORT:81]</WebUI>
+  <Banner></Banner>
+  <Icon>https://nginxproxymanager.com/icon.png</Icon>
+  
+  <Network Default="bridge">bridge</Network>
+  <Config Type="Port" Name="WebUI Port" Target="81" Default="81" Mode="tcp" Display="always-hide" Required="true"
+       Description="This is the web interface port you can access via a web browser.">81</Config>
+  <Config Type="Port" Name="webproxy" Target="80" Default="80" Mode="tcp" Display="always-hide" Required="true"
+       Description="This is the HTTP port for proxying non SSL traffic.">80</Config>
+  <Config Type="Port" Name="webproxy-secured" Target="443" Default="443" Mode="tcp" Display="always-hide" Required="true"
+       Description="This is Sync's UDP port for data transfers.">443</Config>
+  <Config Type="Path" Name="Data" Target="/data" Default="/mnt/user/appdata/NginxProxyManager/Certificates" Mode="rw" Display="advanced-hide" Required="true"
+       Description="This is where NGINX configs will be stored.">/mnt/user/appdata/NginxProxyManager/Certificates</Config>
+  <Config Type="Path" Name="Certificates" Target="/etc/letsencrypt" Default="/mnt/user/appdata/NginxProxyManager/Certificates" Mode="rw" Display="advanced-hide" Required="true"
+       Description="This is where certificates will be stored.">/mnt/user/appdata/NginxProxyManager/Certificates</Config>
+</Containers>
